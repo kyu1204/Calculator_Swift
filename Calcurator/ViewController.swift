@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     @IBOutlet var numberButtonList: [CircleButton]!
     @IBOutlet weak var clearButton: CircleButton!
     @IBOutlet weak var negativeButton: CircleButton!
+    @IBOutlet weak var percentButton: CircleButton!
+    var buttonCount: Int = 0
     
     var numberString: String = "" {
         didSet {
@@ -20,8 +22,19 @@ class ViewController: UIViewController {
                 guard let self = self else { return }
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = .decimal
-                if let intString = Int(self.numberString) {
-                    self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
+                if let intString = Double(self.numberString) {
+                    if intString >= 1 {
+                        self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
+                    }
+                    else if intString <= -1 {
+                        self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
+                    }
+                    else if intString == 0 {
+                        self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
+                    }
+                    else {
+                        self.resultLabel.text = "\(intString)"
+                    }
                 }
             }
         }
@@ -38,19 +51,20 @@ class ViewController: UIViewController {
     }
     
     @objc fileprivate func onNumberButtonClick(sender: UIButton) {
-        print(numberString)
-        if numberString.count < 9{
+        if buttonCount < 9{
             guard let inputString = sender.titleLabel?.text else { return }
             
             let clickNumber = inputString.trimmingCharacters(in: .whitespaces)
             
             if clickNumber == "0" {
-                if resultLabel.text != "0" {
+                if numberString != "0" && numberString != "" {
                     numberString.append(clickNumber)
+                    buttonCount += 1
                 }
             }
             else {
                 numberString.append(clickNumber)
+                buttonCount += 1
             }
             
             if clearButton.titleLabel?.text == "AC" {
@@ -66,6 +80,7 @@ class ViewController: UIViewController {
     @IBAction func onCluearButtonClick(_ sender: Any) {
         numberString.removeAll()
         resultLabel.text = "0"
+        buttonCount = 0
         
         if clearButton.titleLabel?.text == "C" {
             UIView.setAnimationsEnabled(false)
@@ -74,13 +89,22 @@ class ViewController: UIViewController {
             UIView.setAnimationsEnabled(true)
         }
     }
+
     @IBAction func onNegativeButtonClick(_ sender: Any) {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
-        if var intString = Int(self.numberString) {
+        if var intString = Float(self.numberString) {
             intString *= -1
-            self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
             self.numberString = String(intString)
+        }
+    }
+    
+    @IBAction func onPercentButtonClick(_ sender: Any) {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        if var intString = Decimal(string: self.numberString) {
+            intString /= 100
+            self.numberString = "\(intString)"
         }
     }
     
