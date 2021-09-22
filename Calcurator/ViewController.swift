@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var mutipleButton: CircleButton!
     @IBOutlet weak var divisonButton: CircleButton!
     @IBOutlet weak var equalButton: CircleButton!
+    @IBOutlet weak var historyButton: UIButton!
     
     var buttonCount: Int = 0
     var firstNum: Double = 0.0
@@ -27,6 +28,8 @@ class ViewController: UIViewController {
     var tmpNum: Double = 0.0
     var operateData: String = ""
     var resetFlag: Bool = false
+    var history: String = ""
+    var historyList: Array<String> = []
     
     
     var numberString: String = "" {
@@ -97,6 +100,20 @@ class ViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.identifier, "historySegue" == id {
+            if let resultView = segue.destination as? HistoryView {
+                // 데이터 셋팅
+                resultView.historyList = self.historyList
+            }
+        }
+    }
+    
+    @IBAction func onHistoryButtonClick(_ sender: Any) {
+        performSegue(withIdentifier: "historySegue", sender: nil)
+    }
+    
+    
     @IBAction func onClearButton(_ sender: Any) {
         numberString.removeAll()
         operateData = ""
@@ -141,12 +158,15 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onEqualButtonClick(_ sender: Any) {
+        history.append(numberString)
         switch operateData {
         case "+":
             if let intString = Double(self.numberString) {
                 operateData = "+"
                 if resetFlag{
                     firstNum += lastNum
+                    history.append("+")
+                    history.append(String(lastNum))
                 }
                 else {
                     lastNum = intString
@@ -163,6 +183,8 @@ class ViewController: UIViewController {
                 operateData = "-"
                 if resetFlag{
                     firstNum -= lastNum
+                    history.append("-")
+                    history.append(String(lastNum))
                 }
                 else {
                     lastNum = intString
@@ -178,6 +200,8 @@ class ViewController: UIViewController {
                 operateData = "*"
                 if resetFlag{
                     firstNum *= lastNum
+                    history.append("*")
+                    history.append(String(lastNum))
                 }
                 else {
                     if tmpNum != 0 {
@@ -201,11 +225,10 @@ class ViewController: UIViewController {
                 operateData = "/"
                 if resetFlag{
                     firstNum /= lastNum
+                    history.append("/")
+                    history.append(String(lastNum))
                     DispatchQueue.main.async {
                         self.numberString = "\(self.firstNum)"
-                        self.firstNum = 0
-                        self.lastNum = 0
-                        self.tmpNum = 0
                         self.resetFlag = true
                     }
                 }
@@ -213,6 +236,9 @@ class ViewController: UIViewController {
                     if intString == 0 {
                         DispatchQueue.main.async {
                             self.resultLabel.text = "오류"
+                            self.firstNum = 0
+                            self.lastNum = 0
+                            self.tmpNum = 0
                             self.resetFlag = true
                         }
                     }
@@ -239,6 +265,10 @@ class ViewController: UIViewController {
                 self.resetFlag = true
             }
         }
+        history.append("=")
+        history.append("\(self.firstNum)")
+        historyList.append(history)
+        history = ""
     }
     
     func operation() {
@@ -342,6 +372,8 @@ class ViewController: UIViewController {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
                 lastNum = intString
+                history.append(numberString)
+                history.append("+")
                 if firstNum == 0 {
                     firstNum = lastNum
                 }
@@ -358,6 +390,8 @@ class ViewController: UIViewController {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
                 lastNum = intString
+                history.append(numberString)
+                history.append("-")
                 if firstNum == 0 {
                     firstNum = lastNum
                 }
@@ -374,6 +408,8 @@ class ViewController: UIViewController {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
                 lastNum = intString
+                history.append(numberString)
+                history.append("*")
                 if firstNum == 0 {
                     firstNum = lastNum
                 }
@@ -398,6 +434,8 @@ class ViewController: UIViewController {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
                 lastNum = intString
+                history.append(numberString)
+                history.append("/")
                 if firstNum == 0 {
                     firstNum = lastNum
                 }

@@ -405,6 +405,17 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C43-rk-BGR">
+                                <rect key="frame" x="319" y="42" width="36" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" systemColor="systemGray2Color"/>
+                                <state key="normal" image="arrow.clockwise.circle" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                                </state>
+                                <connections>
+                                    <action selector="onHistoryButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R3q-mu-fV2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -422,6 +433,7 @@
                         <outlet property="divisonButton" destination="y6H-fv-zLO" id="HpF-RV-OHK"/>
                         <outlet property="dotButton" destination="iGk-JS-sJ5" id="gca-5B-5LC"/>
                         <outlet property="equalButton" destination="OZD-a0-Rzz" id="XAM-MZ-54s"/>
+                        <outlet property="historyButton" destination="C43-rk-BGR" id="MbG-zl-owb"/>
                         <outlet property="minusButton" destination="fMY-Rm-ucV" id="PJO-Er-QNj"/>
                         <outlet property="mutipleButton" destination="bgn-pR-cJ8" id="WEv-9b-3fw"/>
                         <outlet property="negativeButton" destination="fal-9B-3Fx" id="6uS-uw-RiD"/>
@@ -438,11 +450,71 @@
                         <outletCollection property="numberButtonList" destination="BLk-f5-fhD" collectionClass="NSMutableArray" id="nXo-xU-5tg"/>
                         <outletCollection property="numberButtonList" destination="qXA-v8-7u6" collectionClass="NSMutableArray" id="56o-5N-gvS"/>
                         <outletCollection property="numberButtonList" destination="2XN-aC-1cs" collectionClass="NSMutableArray" id="mc9-Vg-KsH"/>
+                        <segue destination="Bed-LL-Ckv" kind="show" identifier="historySegue" id="0v6-nR-hPV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-45" y="94"/>
+        </scene>
+        <!--History View-->
+        <scene sceneID="z4V-Mf-8Rl">
+            <objects>
+                <viewController id="Bed-LL-Ckv" customClass="HistoryView" customModule="밍산기" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qAL-Im-xNO">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6q9-d1-od5">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="sectionIndexBackgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="myTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyTableCell" id="orq-c8-ipW" customClass="MyTableCell" customModule="밍산기" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="390" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="orq-c8-ipW" id="Baz-Ov-XuN">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUW-PU-J0X">
+                                                    <rect key="frame" x="172" y="10.333333333333336" width="46" height="23"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="highlightedColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="bUW-PU-J0X" firstAttribute="centerX" secondItem="Baz-Ov-XuN" secondAttribute="centerX" id="DtZ-Fn-95C"/>
+                                                <constraint firstItem="bUW-PU-J0X" firstAttribute="centerY" secondItem="Baz-Ov-XuN" secondAttribute="centerY" id="wm0-nm-qaf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="historyLabel" destination="bUW-PU-J0X" id="y7S-5v-0Xz"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="YQp-rk-Z6O"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="6q9-d1-od5" secondAttribute="bottom" id="3Fl-YR-DAb"/>
+                            <constraint firstItem="YQp-rk-Z6O" firstAttribute="trailing" secondItem="6q9-d1-od5" secondAttribute="trailing" id="OOp-SK-Zgo"/>
+                            <constraint firstItem="6q9-d1-od5" firstAttribute="top" secondItem="YQp-rk-Z6O" secondAttribute="top" id="e2I-WM-N0U"/>
+                            <constraint firstItem="6q9-d1-od5" firstAttribute="leading" secondItem="YQp-rk-Z6O" secondAttribute="leading" id="fnQ-B1-ebc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="OQf-ed-GRn"/>
+                    <connections>
+                        <outlet property="historyTable" destination="6q9-d1-od5" id="0pC-9L-wax"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="crr-ol-Ig9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="876.92307692307691" y="93.838862559241704"/>
         </scene>
     </scenes>
     <designables>
@@ -505,6 +577,7 @@
         </designable>
     </designables>
     <resources>
+        <image name="arrow.clockwise.circle" catalog="system" width="128" height="121"/>
         <image name="divide" catalog="system" width="128" height="103"/>
         <image name="equal" catalog="system" width="128" height="72"/>
         <image name="minus" catalog="system" width="128" height="24"/>
@@ -512,6 +585,9 @@
         <image name="percent" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus.slash.minus" catalog="system" width="128" height="115"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
