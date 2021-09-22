@@ -17,11 +17,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var dotButton: CircleButton!
     @IBOutlet weak var plusButton: CircleButton!
     @IBOutlet weak var minusButton: CircleButton!
+    @IBOutlet weak var mutipleButton: CircleButton!
+    @IBOutlet weak var divisonButton: CircleButton!
     @IBOutlet weak var equalButton: CircleButton!
     
     var buttonCount: Int = 0
     var firstNum: Double = 0.0
-    var secondNum: Double = 0.0
     var lastNum: Double = 0.0
     var operateData: String = ""
     var resetFlag: Bool = false
@@ -34,7 +35,6 @@ class ViewController: UIViewController {
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = .decimal
                 
-                print(self.numberString)
                 if let intString = Double(self.numberString) {
                     if intString >= 1 {
                         self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
@@ -61,11 +61,7 @@ class ViewController: UIViewController {
         }
         
     }
-    
-    func operation() {
-        
-    }
-    
+
     @objc fileprivate func onNumberButtonClick(sender: UIButton) {
         if resetFlag {
             self.numberString.removeAll()
@@ -144,7 +140,14 @@ class ViewController: UIViewController {
         case "+":
             if let intString = Double(self.numberString) {
                 operateData = "+"
-                firstNum += intString
+                if resetFlag{
+                    firstNum += lastNum
+                }
+                else {
+                    lastNum = intString
+                    firstNum += lastNum
+                    
+                }
                 DispatchQueue.main.async {
                     self.numberString = "\(self.firstNum)"
                     self.resetFlag = true
@@ -153,47 +156,180 @@ class ViewController: UIViewController {
         case "-":
             if let intString = Double(self.numberString) {
                 operateData = "-"
-                firstNum -= intString
+                if resetFlag{
+                    firstNum -= lastNum
+                }
+                else {
+                    lastNum = intString
+                    firstNum -= lastNum
+                }
+                DispatchQueue.main.async {
+                    self.numberString = "\(self.firstNum)"
+                    self.resetFlag = true
+                }
+            }
+        case "*":
+            if let intString = Double(self.numberString) {
+                operateData = "*"
+                if resetFlag{
+                    firstNum *= lastNum
+                }
+                else {
+                    lastNum = intString
+                    firstNum *= lastNum
+                }
+                DispatchQueue.main.async {
+                    self.numberString = "\(self.firstNum)"
+                    self.resetFlag = true
+                }
+            }
+        case "/":
+            if let intString = Double(self.numberString) {
+                operateData = "/"
+                if resetFlag{
+                    firstNum /= lastNum
+                }
+                else {
+                    lastNum = intString
+                    firstNum /= lastNum
+                }
                 DispatchQueue.main.async {
                     self.numberString = "\(self.firstNum)"
                     self.resetFlag = true
                 }
             }
         default:
-            print("error")
-        }
-    }
-
-    @IBAction func onPlusButtonClick(_ sender: Any) {
-        if let intString = Double(self.numberString) {
-            operateData = "+"
-            if firstNum == 0 {
-                firstNum = intString
-            }
-            else {
-                firstNum += intString
-            }
             DispatchQueue.main.async {
-                self.numberString = "\(self.firstNum)"
-                self.resetFlag = true
-            }
-        }
-    }
-
-    @IBAction func onMinusButtonClick(_ sender: Any) {
-        if let intString = Double(self.numberString) {
-            operateData = "-"
-            if firstNum == 0 {
-                firstNum = intString
-            }
-            else {
-                firstNum -= intString
-            }
-            DispatchQueue.main.async {
-                self.numberString = "\(self.firstNum)"
+                self.resultLabel.text = "오류"
                 self.resetFlag = true
             }
         }
     }
     
+    func operation() {
+        switch operateData {
+        case "+":
+            if let intString = Double(self.numberString) {
+                if resetFlag{
+                    firstNum += lastNum
+                }
+                else {
+                    lastNum = intString
+                    firstNum += lastNum
+                    
+                }
+                DispatchQueue.main.async {
+                    self.numberString = "\(self.firstNum)"
+                }
+            }
+        case "-":
+            if let intString = Double(self.numberString) {
+                if resetFlag{
+                    firstNum -= lastNum
+                }
+                else {
+                    lastNum = intString
+                    firstNum -= lastNum
+                }
+                DispatchQueue.main.async {
+                    self.numberString = "\(self.firstNum)"
+                }
+            }
+        case "*":
+            if let intString = Double(self.numberString) {
+                if resetFlag{
+                    firstNum *= lastNum
+                }
+                else {
+                    lastNum = intString
+                    firstNum *= lastNum
+                }
+                DispatchQueue.main.async {
+                    self.numberString = "\(self.firstNum)"
+                }
+            }
+        case "/":
+            if let intString = Double(self.numberString) {
+                if resetFlag{
+                    firstNum /= lastNum
+                }
+                else {
+                    lastNum = intString
+                    firstNum /= lastNum
+                }
+                DispatchQueue.main.async {
+                    self.numberString = "\(self.firstNum)"
+                }
+            }
+        default:
+            DispatchQueue.main.async {
+                self.resultLabel.text = "오류"
+            }
+        }
+    }
+
+    @IBAction func onPlusButtonClick(_ sender: Any) {
+        if !self.resetFlag {
+            if let intString = Double(self.numberString) {
+                lastNum = intString
+                if firstNum == 0 {
+                    firstNum = lastNum
+                }
+                else {
+                    operation()
+                }
+                operateData = "+"
+                resetFlag = true
+            }
+        }
+    }
+
+    @IBAction func onMinusButtonClick(_ sender: Any) {
+        if !self.resetFlag {
+            if let intString = Double(self.numberString) {
+                lastNum = intString
+                if firstNum == 0 {
+                    firstNum = lastNum
+                }
+                else {
+                    operation()
+                }
+                operateData = "-"
+                resetFlag = true
+            }
+        }
+    }
+    
+    @IBAction func onMutipleButtonClick(_ sender: Any) {
+        if !self.resetFlag {
+            if let intString = Double(self.numberString) {
+                lastNum = intString
+                if firstNum == 0 {
+                    firstNum = lastNum
+                }
+                else {
+                    operation()
+                }
+                operateData = "*"
+                resetFlag = true
+            }
+        }
+    }
+
+    @IBAction func onDivisionButtonClick(_ sender: Any) {
+        if !self.resetFlag {
+            if let intString = Double(self.numberString) {
+                lastNum = intString
+                if firstNum == 0 {
+                    firstNum = lastNum
+                }
+                else {
+                    operation()
+                }
+                operateData = "/"
+                resetFlag = true
+            }
+        }
+    }
+
 }

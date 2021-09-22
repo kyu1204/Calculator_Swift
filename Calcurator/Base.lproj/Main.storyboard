@@ -100,6 +100,9 @@
                                                         <real key="value" value="40"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="onDivisionButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cxh-4A-TuX"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -174,6 +177,9 @@
                                                         <real key="value" value="40"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="onMutipleButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="16V-uw-4SK"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -413,9 +419,11 @@
                     </view>
                     <connections>
                         <outlet property="clearButton" destination="4Xc-Kh-uY4" id="ZAS-GO-GoV"/>
+                        <outlet property="divisonButton" destination="y6H-fv-zLO" id="HpF-RV-OHK"/>
                         <outlet property="dotButton" destination="iGk-JS-sJ5" id="gca-5B-5LC"/>
                         <outlet property="equalButton" destination="OZD-a0-Rzz" id="XAM-MZ-54s"/>
                         <outlet property="minusButton" destination="fMY-Rm-ucV" id="PJO-Er-QNj"/>
+                        <outlet property="mutipleButton" destination="bgn-pR-cJ8" id="WEv-9b-3fw"/>
                         <outlet property="negativeButton" destination="fal-9B-3Fx" id="6uS-uw-RiD"/>
                         <outlet property="percentButton" destination="NiY-IN-fvf" id="T8f-wm-aXk"/>
                         <outlet property="plusButton" destination="s7h-em-L7N" id="rE3-jW-CB3"/>
