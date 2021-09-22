@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var clearButton: CircleButton!
     @IBOutlet weak var negativeButton: CircleButton!
     @IBOutlet weak var percentButton: CircleButton!
+    @IBOutlet weak var dotButtonClick: CircleButton!
+    
     var buttonCount: Int = 0
     
     var numberString: String = "" {
@@ -22,6 +24,7 @@ class ViewController: UIViewController {
                 guard let self = self else { return }
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = .decimal
+                
                 if let intString = Double(self.numberString) {
                     if intString >= 1 {
                         self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
@@ -39,7 +42,6 @@ class ViewController: UIViewController {
             }
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +91,7 @@ class ViewController: UIViewController {
             UIView.setAnimationsEnabled(true)
         }
     }
-
+    
     @IBAction func onNegativeButtonClick(_ sender: Any) {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -105,6 +107,16 @@ class ViewController: UIViewController {
         if var intString = Decimal(string: self.numberString) {
             intString /= 100
             self.numberString = "\(intString)"
+        }
+    }
+    
+    @IBAction func onDotButtonClick(_ sender: Any) {
+        if !self.numberString.contains(".") {
+            self.numberString.append(".")
+            
+            DispatchQueue.main.async {
+                self.resultLabel.text = self.numberString
+            }
         }
     }
     

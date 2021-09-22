@@ -357,6 +357,9 @@
                                                         <real key="value" value="40"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="onDotButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wnh-iG-glO"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZD-a0-Rzz" customClass="CircleButton" customModule="밍산기" customModuleProvider="target">
                                                 <rect key="frame" x="285" y="0.0" width="80" height="80"/>
@@ -401,6 +404,7 @@
                     </view>
                     <connections>
                         <outlet property="clearButton" destination="4Xc-Kh-uY4" id="ZAS-GO-GoV"/>
+                        <outlet property="dotButtonClick" destination="iGk-JS-sJ5" id="bXm-DY-FSb"/>
                         <outlet property="negativeButton" destination="fal-9B-3Fx" id="6uS-uw-RiD"/>
                         <outlet property="percentButton" destination="NiY-IN-fvf" id="T8f-wm-aXk"/>
                         <outlet property="resultLabel" destination="6Bf-1f-Ger" id="6lf-4h-0p7"/>
