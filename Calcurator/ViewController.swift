@@ -14,9 +14,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var clearButton: CircleButton!
     @IBOutlet weak var negativeButton: CircleButton!
     @IBOutlet weak var percentButton: CircleButton!
-    @IBOutlet weak var dotButtonClick: CircleButton!
+    @IBOutlet weak var dotButton: CircleButton!
+    @IBOutlet weak var plusButton: CircleButton!
+    @IBOutlet weak var minusButton: CircleButton!
+    @IBOutlet weak var equalButton: CircleButton!
     
     var buttonCount: Int = 0
+    var firstNum: Double = 0.0
+    var secondNum: Double = 0.0
+    var lastNum: Double = 0.0
+    var operateData: String = ""
+    var resetFlag: Bool = false
+    
     
     var numberString: String = "" {
         didSet {
@@ -25,6 +34,7 @@ class ViewController: UIViewController {
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = .decimal
                 
+                print(self.numberString)
                 if let intString = Double(self.numberString) {
                     if intString >= 1 {
                         self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
@@ -52,7 +62,15 @@ class ViewController: UIViewController {
         
     }
     
+    func operation() {
+        
+    }
+    
     @objc fileprivate func onNumberButtonClick(sender: UIButton) {
+        if resetFlag {
+            self.numberString.removeAll()
+            resetFlag = false
+        }
         if buttonCount < 9{
             guard let inputString = sender.titleLabel?.text else { return }
             
@@ -79,10 +97,11 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func onCluearButtonClick(_ sender: Any) {
+    @IBAction func onClearButton(_ sender: Any) {
         numberString.removeAll()
         resultLabel.text = "0"
         buttonCount = 0
+        firstNum = 0.0
         
         if clearButton.titleLabel?.text == "C" {
             UIView.setAnimationsEnabled(false)
@@ -91,7 +110,7 @@ class ViewController: UIViewController {
             UIView.setAnimationsEnabled(true)
         }
     }
-    
+
     @IBAction func onNegativeButtonClick(_ sender: Any) {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -120,5 +139,61 @@ class ViewController: UIViewController {
         }
     }
     
-}
+    @IBAction func onEqualButtonClick(_ sender: Any) {
+        switch operateData {
+        case "+":
+            if let intString = Double(self.numberString) {
+                operateData = "+"
+                firstNum += intString
+                DispatchQueue.main.async {
+                    self.numberString = "\(self.firstNum)"
+                    self.resetFlag = true
+                }
+            }
+        case "-":
+            if let intString = Double(self.numberString) {
+                operateData = "-"
+                firstNum -= intString
+                DispatchQueue.main.async {
+                    self.numberString = "\(self.firstNum)"
+                    self.resetFlag = true
+                }
+            }
+        default:
+            print("error")
+        }
+    }
 
+    @IBAction func onPlusButtonClick(_ sender: Any) {
+        if let intString = Double(self.numberString) {
+            operateData = "+"
+            if firstNum == 0 {
+                firstNum = intString
+            }
+            else {
+                firstNum += intString
+            }
+            DispatchQueue.main.async {
+                self.numberString = "\(self.firstNum)"
+                self.resetFlag = true
+            }
+        }
+    }
+
+    @IBAction func onMinusButtonClick(_ sender: Any) {
+        if let intString = Double(self.numberString) {
+            operateData = "-"
+            if firstNum == 0 {
+                firstNum = intString
+            }
+            else {
+                firstNum -= intString
+            }
+            DispatchQueue.main.async {
+                self.numberString = "\(self.firstNum)"
+                self.resetFlag = true
+            }
+        }
+    }
+    
+}

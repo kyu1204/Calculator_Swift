@@ -38,7 +38,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="onCluearButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IN9-74-MEz"/>
+                                                    <action selector="onClearButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FFz-SD-5bU"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fal-9B-3Fx" customClass="CircleButton" customModule="밍산기" customModuleProvider="target">
@@ -244,6 +244,9 @@
                                                         <real key="value" value="40"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="onMinusButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9te-KE-dI2"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -318,6 +321,9 @@
                                                         <real key="value" value="40"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="onPlusButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DmS-2A-IeW"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -379,6 +385,9 @@
                                                         <real key="value" value="40"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="onEqualButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1O6-ed-Xjv"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -404,9 +413,12 @@
                     </view>
                     <connections>
                         <outlet property="clearButton" destination="4Xc-Kh-uY4" id="ZAS-GO-GoV"/>
-                        <outlet property="dotButtonClick" destination="iGk-JS-sJ5" id="bXm-DY-FSb"/>
+                        <outlet property="dotButton" destination="iGk-JS-sJ5" id="gca-5B-5LC"/>
+                        <outlet property="equalButton" destination="OZD-a0-Rzz" id="XAM-MZ-54s"/>
+                        <outlet property="minusButton" destination="fMY-Rm-ucV" id="PJO-Er-QNj"/>
                         <outlet property="negativeButton" destination="fal-9B-3Fx" id="6uS-uw-RiD"/>
                         <outlet property="percentButton" destination="NiY-IN-fvf" id="T8f-wm-aXk"/>
+                        <outlet property="plusButton" destination="s7h-em-L7N" id="rE3-jW-CB3"/>
                         <outlet property="resultLabel" destination="6Bf-1f-Ger" id="6lf-4h-0p7"/>
                         <outletCollection property="numberButtonList" destination="vub-SY-3ck" collectionClass="NSMutableArray" id="1x5-E4-TaY"/>
                         <outletCollection property="numberButtonList" destination="Ncw-xG-b5g" collectionClass="NSMutableArray" id="oMS-X1-tZx"/>
@@ -422,7 +434,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="20" y="94"/>
+            <point key="canvasLocation" x="-45" y="94"/>
         </scene>
     </scenes>
     <designables>
