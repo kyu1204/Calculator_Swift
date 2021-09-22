@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     var buttonCount: Int = 0
     var firstNum: Double = 0.0
     var lastNum: Double = 0.0
+    var tmpNum: Double = 0.0
     var operateData: String = ""
     var resetFlag: Bool = false
     
@@ -67,7 +68,7 @@ class ViewController: UIViewController {
             self.numberString.removeAll()
             resetFlag = false
         }
-        if buttonCount < 9{
+        if buttonCount < 9 {
             guard let inputString = sender.titleLabel?.text else { return }
             
             let clickNumber = inputString.trimmingCharacters(in: .whitespaces)
@@ -175,8 +176,16 @@ class ViewController: UIViewController {
                     firstNum *= lastNum
                 }
                 else {
-                    lastNum = intString
-                    firstNum *= lastNum
+                    if tmpNum != 0 {
+                        lastNum = intString
+                        tmpNum *= lastNum
+                        firstNum += tmpNum
+                        tmpNum = 0
+                    }
+                    else {
+                        lastNum = intString
+                        firstNum *= lastNum
+                    }
                 }
                 DispatchQueue.main.async {
                     self.numberString = "\(self.firstNum)"
@@ -190,8 +199,16 @@ class ViewController: UIViewController {
                     firstNum /= lastNum
                 }
                 else {
-                    lastNum = intString
-                    firstNum /= lastNum
+                    if tmpNum != 0 {
+                        lastNum = intString
+                        tmpNum /= lastNum
+                        firstNum += tmpNum
+                        tmpNum = 0
+                    }
+                    else {
+                        lastNum = intString
+                        firstNum /= lastNum
+                    }
                 }
                 DispatchQueue.main.async {
                     self.numberString = "\(self.firstNum)"
@@ -241,8 +258,16 @@ class ViewController: UIViewController {
                     firstNum *= lastNum
                 }
                 else {
-                    lastNum = intString
-                    firstNum *= lastNum
+                    if tmpNum != 0 {
+                        lastNum = intString
+                        tmpNum *= lastNum
+                        firstNum += tmpNum
+                        tmpNum = 0
+                    }
+                    else {
+                        lastNum = intString
+                        firstNum *= lastNum
+                    }
                 }
                 DispatchQueue.main.async {
                     self.numberString = "\(self.firstNum)"
@@ -254,8 +279,16 @@ class ViewController: UIViewController {
                     firstNum /= lastNum
                 }
                 else {
-                    lastNum = intString
-                    firstNum /= lastNum
+                    if tmpNum != 0 {
+                        lastNum = intString
+                        tmpNum /= lastNum
+                        firstNum += tmpNum
+                        tmpNum = 0
+                    }
+                    else {
+                        lastNum = intString
+                        firstNum /= lastNum
+                    }
                 }
                 DispatchQueue.main.async {
                     self.numberString = "\(self.firstNum)"
@@ -278,10 +311,10 @@ class ViewController: UIViewController {
                 else {
                     operation()
                 }
-                operateData = "+"
-                resetFlag = true
             }
         }
+        operateData = "+"
+        resetFlag = true
     }
 
     @IBAction func onMinusButtonClick(_ sender: Any) {
@@ -294,10 +327,10 @@ class ViewController: UIViewController {
                 else {
                     operation()
                 }
-                operateData = "-"
-                resetFlag = true
             }
         }
+        operateData = "-"
+        resetFlag = true
     }
     
     @IBAction func onMutipleButtonClick(_ sender: Any) {
@@ -308,12 +341,20 @@ class ViewController: UIViewController {
                     firstNum = lastNum
                 }
                 else {
-                    operation()
+                    if operateData == "+" {
+                        tmpNum = lastNum
+                    }
+                    else if operateData == "-" {
+                        tmpNum = lastNum * -1
+                    }
+                    else {
+                        operation()
+                    }
                 }
-                operateData = "*"
-                resetFlag = true
             }
         }
+        operateData = "*"
+        resetFlag = true
     }
 
     @IBAction func onDivisionButtonClick(_ sender: Any) {
@@ -324,12 +365,20 @@ class ViewController: UIViewController {
                     firstNum = lastNum
                 }
                 else {
-                    operation()
+                    if operateData == "+" {
+                        tmpNum = lastNum
+                    }
+                    else if operateData == "-" {
+                        tmpNum = lastNum * -1
+                    }
+                    else {
+                        operation()
+                    }
                 }
-                operateData = "/"
-                resetFlag = true
             }
         }
+        operateData = "/"
+        resetFlag = true
     }
 
 }
