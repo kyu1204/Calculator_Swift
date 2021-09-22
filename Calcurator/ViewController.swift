@@ -62,7 +62,7 @@ class ViewController: UIViewController {
         }
         
     }
-
+    
     @objc fileprivate func onNumberButtonClick(sender: UIButton) {
         if resetFlag {
             self.numberString.removeAll()
@@ -77,6 +77,9 @@ class ViewController: UIViewController {
                 if numberString != "0" && numberString != "" {
                     numberString.append(clickNumber)
                     buttonCount += 1
+                }
+                else {
+                    numberString = clickNumber
                 }
             }
             else {
@@ -96,6 +99,7 @@ class ViewController: UIViewController {
     
     @IBAction func onClearButton(_ sender: Any) {
         numberString.removeAll()
+        operateData = ""
         resultLabel.text = "0"
         buttonCount = 0
         firstNum = 0.0
@@ -107,7 +111,7 @@ class ViewController: UIViewController {
             UIView.setAnimationsEnabled(true)
         }
     }
-
+    
     @IBAction func onNegativeButtonClick(_ sender: Any) {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -197,27 +201,41 @@ class ViewController: UIViewController {
                 operateData = "/"
                 if resetFlag{
                     firstNum /= lastNum
+                    DispatchQueue.main.async {
+                        self.numberString = "\(self.firstNum)"
+                        self.firstNum = 0
+                        self.lastNum = 0
+                        self.tmpNum = 0
+                        self.resetFlag = true
+                    }
                 }
                 else {
-                    if tmpNum != 0 {
-                        lastNum = intString
-                        tmpNum /= lastNum
-                        firstNum += tmpNum
-                        tmpNum = 0
+                    if intString == 0 {
+                        DispatchQueue.main.async {
+                            self.resultLabel.text = "오류"
+                            self.resetFlag = true
+                        }
                     }
                     else {
-                        lastNum = intString
-                        firstNum /= lastNum
+                        if tmpNum != 0 {
+                            lastNum = intString
+                            tmpNum /= lastNum
+                            firstNum += tmpNum
+                            tmpNum = 0
+                        }
+                        else {
+                            lastNum = intString
+                            firstNum /= lastNum
+                        }
+                        DispatchQueue.main.async {
+                            self.numberString = "\(self.firstNum)"
+                            self.resetFlag = true
+                        }
                     }
-                }
-                DispatchQueue.main.async {
-                    self.numberString = "\(self.firstNum)"
-                    self.resetFlag = true
                 }
             }
         default:
             DispatchQueue.main.async {
-                self.resultLabel.text = "오류"
                 self.resetFlag = true
             }
         }
@@ -236,6 +254,7 @@ class ViewController: UIViewController {
                     
                 }
                 DispatchQueue.main.async {
+                    self.lastNum = self.firstNum
                     self.numberString = "\(self.firstNum)"
                 }
             }
@@ -249,6 +268,7 @@ class ViewController: UIViewController {
                     firstNum -= lastNum
                 }
                 DispatchQueue.main.async {
+                    self.lastNum = self.firstNum
                     self.numberString = "\(self.firstNum)"
                 }
             }
@@ -270,6 +290,7 @@ class ViewController: UIViewController {
                     }
                 }
                 DispatchQueue.main.async {
+                    self.lastNum = self.firstNum
                     self.numberString = "\(self.firstNum)"
                 }
             }
@@ -277,21 +298,37 @@ class ViewController: UIViewController {
             if let intString = Double(self.numberString) {
                 if resetFlag{
                     firstNum /= lastNum
+                    DispatchQueue.main.async {
+                        self.lastNum = self.firstNum
+                        self.numberString = "\(self.firstNum)"
+                    }
                 }
                 else {
-                    if tmpNum != 0 {
-                        lastNum = intString
-                        tmpNum /= lastNum
-                        firstNum += tmpNum
-                        tmpNum = 0
+                    if intString == 0 {
+                        DispatchQueue.main.async {
+                            self.resultLabel.text = "오류"
+                            self.firstNum = 0
+                            self.lastNum = 0
+                            self.tmpNum = 0
+                            self.resetFlag = true
+                        }
                     }
                     else {
-                        lastNum = intString
-                        firstNum /= lastNum
+                        if tmpNum != 0 {
+                            lastNum = intString
+                            tmpNum /= lastNum
+                            firstNum += tmpNum
+                            tmpNum = 0
+                        }
+                        else {
+                            lastNum = intString
+                            firstNum /= lastNum
+                        }
+                        DispatchQueue.main.async {
+                            self.lastNum = self.firstNum
+                            self.numberString = "\(self.firstNum)"
+                        }
                     }
-                }
-                DispatchQueue.main.async {
-                    self.numberString = "\(self.firstNum)"
                 }
             }
         default:
@@ -300,7 +337,7 @@ class ViewController: UIViewController {
             }
         }
     }
-
+    
     @IBAction func onPlusButtonClick(_ sender: Any) {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
@@ -316,7 +353,7 @@ class ViewController: UIViewController {
         operateData = "+"
         resetFlag = true
     }
-
+    
     @IBAction func onMinusButtonClick(_ sender: Any) {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
@@ -356,7 +393,7 @@ class ViewController: UIViewController {
         operateData = "*"
         resetFlag = true
     }
-
+    
     @IBAction func onDivisionButtonClick(_ sender: Any) {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
@@ -380,5 +417,5 @@ class ViewController: UIViewController {
         operateData = "/"
         resetFlag = true
     }
-
+    
 }
