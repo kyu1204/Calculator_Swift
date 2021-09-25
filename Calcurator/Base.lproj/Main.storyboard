@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -471,7 +472,7 @@
                                 <color key="sectionIndexBackgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="myTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyTableCell" id="orq-c8-ipW" customClass="MyTableCell" customModule="밍산기" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.333333969116211" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="44.666666030883789" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="orq-c8-ipW" id="Baz-Ov-XuN">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
@@ -537,22 +538,22 @@
             <size key="intrinsicContentSize" width="30" height="60"/>
         </designable>
         <designable name="NiY-IN-fvf">
-            <size key="intrinsicContentSize" width="39" height="32.666666666666664"/>
+            <size key="intrinsicContentSize" width="40.333333333333336" height="34"/>
         </designable>
         <designable name="OZD-a0-Rzz">
-            <size key="intrinsicContentSize" width="29.333333333333332" height="25"/>
+            <size key="intrinsicContentSize" width="31.333333333333332" height="25.333333333333332"/>
         </designable>
         <designable name="Xsj-Zv-fA9">
             <size key="intrinsicContentSize" width="30" height="60"/>
         </designable>
         <designable name="bgn-pR-cJ8">
-            <size key="intrinsicContentSize" width="28.666666666666668" height="28.333333333333332"/>
+            <size key="intrinsicContentSize" width="30.333333333333332" height="28.666666666666668"/>
         </designable>
         <designable name="fMY-Rm-ucV">
-            <size key="intrinsicContentSize" width="32.666666666666664" height="22"/>
+            <size key="intrinsicContentSize" width="34.666666666666664" height="22"/>
         </designable>
         <designable name="fal-9B-3Fx">
-            <size key="intrinsicContentSize" width="36" height="32"/>
+            <size key="intrinsicContentSize" width="38" height="33.333333333333336"/>
         </designable>
         <designable name="iGk-JS-sJ5">
             <size key="intrinsicContentSize" width="30" height="60"/>
@@ -561,7 +562,7 @@
             <size key="intrinsicContentSize" width="30" height="60"/>
         </designable>
         <designable name="s7h-em-L7N">
-            <size key="intrinsicContentSize" width="32.666666666666664" height="30.333333333333332"/>
+            <size key="intrinsicContentSize" width="34.666666666666664" height="31"/>
         </designable>
         <designable name="vF4-mV-Tx2">
             <size key="intrinsicContentSize" width="30" height="60"/>
@@ -570,7 +571,7 @@
             <size key="intrinsicContentSize" width="30" height="60"/>
         </designable>
         <designable name="y6H-fv-zLO">
-            <size key="intrinsicContentSize" width="32.666666666666664" height="29"/>
+            <size key="intrinsicContentSize" width="34.666666666666664" height="29.666666666666668"/>
         </designable>
         <designable name="zpY-V5-oo0">
             <size key="intrinsicContentSize" width="30" height="60"/>

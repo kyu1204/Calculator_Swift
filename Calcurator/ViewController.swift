@@ -30,27 +30,23 @@ class ViewController: UIViewController {
     var resetFlag: Bool = false
     var history: String = ""
     var historyList: Array<String> = []
+    let numberFormatter: NumberFormatter = NumberFormatter()
     
     
-    var numberString: String = "" {
+    var numberString: String = "0" {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                let numberFormatter = NumberFormatter()
-                numberFormatter.numberStyle = .decimal
-                
-                if let intString = Double(self.numberString) {
+
+                if let intString = Decimal(string: self.numberString) {
                     if intString >= 1 {
-                        self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
+                        self.resultLabel.text = self.numberFormatter.string(for: intString)
                     }
                     else if intString <= -1 {
-                        self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
-                    }
-                    else if intString == 0 {
-                        self.resultLabel.text = numberFormatter.string(from: NSNumber(value: intString))
+                        self.resultLabel.text = self.numberFormatter.string(for: intString)
                     }
                     else {
-                        self.resultLabel.text = "\(intString)"
+                        self.resultLabel.text = self.numberString
                     }
                 }
             }
@@ -60,15 +56,30 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 10
+        
         for numButton in numberButtonList {
             numButton.addTarget(self, action: #selector(onNumberButtonClick(sender:)), for: .touchUpInside)
         }
         
     }
     
+    func historyAppend(data: String, flag: String) {
+        switch flag {
+        case "oper":
+            history.append(data)
+        default:
+            if let intString = Double(data) {
+                history.append(self.numberFormatter.string(from: NSNumber(value: intString))!)
+            }
+        }
+    }
+    
     @objc fileprivate func onNumberButtonClick(sender: UIButton) {
         if resetFlag {
             self.numberString.removeAll()
+            buttonCount = 0
             resetFlag = false
         }
         if buttonCount < 9 {
@@ -130,17 +141,15 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onNegativeButtonClick(_ sender: Any) {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        if var intString = Float(self.numberString) {
-            intString *= -1
-            self.numberString = String(intString)
+        if self.numberString.contains("-") {
+            self.numberString.remove(at: self.numberString.startIndex)
+        }
+        else {
+            self.numberString = "-" + self.numberString
         }
     }
     
     @IBAction func onPercentButtonClick(_ sender: Any) {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
         if var intString = Decimal(string: self.numberString) {
             intString /= 100
             self.numberString = "\(intString)"
@@ -148,25 +157,21 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onDotButtonClick(_ sender: Any) {
-        if !self.numberString.contains(".") {
+        if !self.numberString.contains(".") && !self.resultLabel.text!.contains(".") {
             self.numberString.append(".")
-            
-            DispatchQueue.main.async {
-                self.resultLabel.text = self.numberString
-            }
         }
     }
     
     @IBAction func onEqualButtonClick(_ sender: Any) {
-        history.append(numberString)
+        historyAppend(data: self.numberString, flag: "num")
         switch operateData {
         case "+":
             if let intString = Double(self.numberString) {
                 operateData = "+"
                 if resetFlag{
                     firstNum += lastNum
-                    history.append("+")
-                    history.append(String(lastNum))
+                    historyAppend(data: "+", flag: "oper")
+                    historyAppend(data: String(lastNum), flag: "num")
                 }
                 else {
                     lastNum = intString
@@ -183,8 +188,8 @@ class ViewController: UIViewController {
                 operateData = "-"
                 if resetFlag{
                     firstNum -= lastNum
-                    history.append("-")
-                    history.append(String(lastNum))
+                    historyAppend(data: "-", flag: "oper")
+                    historyAppend(data: String(lastNum), flag: "num")
                 }
                 else {
                     lastNum = intString
@@ -200,8 +205,8 @@ class ViewController: UIViewController {
                 operateData = "*"
                 if resetFlag{
                     firstNum *= lastNum
-                    history.append("*")
-                    history.append(String(lastNum))
+                    historyAppend(data: "*", flag: "oper")
+                    historyAppend(data: String(lastNum), flag: "num")
                 }
                 else {
                     if tmpNum != 0 {
@@ -225,8 +230,8 @@ class ViewController: UIViewController {
                 operateData = "/"
                 if resetFlag{
                     firstNum /= lastNum
-                    history.append("/")
-                    history.append(String(lastNum))
+                    historyAppend(data: "/", flag: "oper")
+                    historyAppend(data: String(lastNum), flag: "num")
                     DispatchQueue.main.async {
                         self.numberString = "\(self.firstNum)"
                         self.resetFlag = true
@@ -265,8 +270,8 @@ class ViewController: UIViewController {
                 self.resetFlag = true
             }
         }
-        history.append("=")
-        history.append("\(self.firstNum)")
+        historyAppend(data: "=", flag: "oper")
+        historyAppend(data: "\(self.firstNum)", flag: "num")
         historyList.append(history)
         history = ""
     }
@@ -372,8 +377,6 @@ class ViewController: UIViewController {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
                 lastNum = intString
-                history.append(numberString)
-                history.append("+")
                 if firstNum == 0 {
                     firstNum = lastNum
                 }
@@ -382,6 +385,8 @@ class ViewController: UIViewController {
                 }
             }
         }
+        historyAppend(data: numberString, flag: "num")
+        historyAppend(data: "+", flag: "oper")
         operateData = "+"
         resetFlag = true
     }
@@ -390,8 +395,6 @@ class ViewController: UIViewController {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
                 lastNum = intString
-                history.append(numberString)
-                history.append("-")
                 if firstNum == 0 {
                     firstNum = lastNum
                 }
@@ -400,6 +403,8 @@ class ViewController: UIViewController {
                 }
             }
         }
+        historyAppend(data: numberString, flag: "num")
+        historyAppend(data: "-", flag: "oper")
         operateData = "-"
         resetFlag = true
     }
@@ -408,8 +413,6 @@ class ViewController: UIViewController {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
                 lastNum = intString
-                history.append(numberString)
-                history.append("*")
                 if firstNum == 0 {
                     firstNum = lastNum
                 }
@@ -426,6 +429,8 @@ class ViewController: UIViewController {
                 }
             }
         }
+        historyAppend(data: numberString, flag: "num")
+        historyAppend(data: "*", flag: "oper")
         operateData = "*"
         resetFlag = true
     }
@@ -434,8 +439,6 @@ class ViewController: UIViewController {
         if !self.resetFlag {
             if let intString = Double(self.numberString) {
                 lastNum = intString
-                history.append(numberString)
-                history.append("/")
                 if firstNum == 0 {
                     firstNum = lastNum
                 }
@@ -452,6 +455,8 @@ class ViewController: UIViewController {
                 }
             }
         }
+        historyAppend(data: numberString, flag: "num")
+        historyAppend(data: "/", flag: "oper")
         operateData = "/"
         resetFlag = true
     }
